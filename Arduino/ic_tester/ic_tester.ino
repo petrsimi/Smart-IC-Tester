@@ -10,9 +10,9 @@
 CRGB leds[NUM_LEDS];
 
 //TFT
-#include <Adafruit_GFX.h>    // Core graphics library
-#include <Adafruit_TFTLCD.h> // Hardware-specific library
-#include <TouchScreen.h> //Touch Screen Library
+#include <SPFD5408_Adafruit_GFX.h> // Core graphics library
+#include <SPFD5408_Adafruit_TFTLCD.h> // Hardware-specific library
+#include <SPFD5408_TouchScreen.h>
 
 #define LCD_CS A3 // Chip Select goes to Analog 3
 #define LCD_CD A2 // Command/Data goes to Analog 2
@@ -20,17 +20,18 @@ CRGB leds[NUM_LEDS];
 #define LCD_RD A0 // LCD Read goes to Analog 0
 #define LCD_RESET A4 // LCD RESET goes to Analog 4
 
-#define YP A3  // must be an analog pin, use "An" notation!
+#define YP A1  // must be an analog pin, use "An" notation!
 #define XM A2  // must be an analog pin, use "An" notation!
-#define YM 9   // can be a digital pin
-#define XP 8   // can be a digital pin
+#define YM 7   // can be a digital pin
+#define XP 6   // can be a digital pin
 
-#define TS_MINX 150
+
+#define TS_MINX 160
 #define TS_MINY 120
 #define TS_MAXX 920
-#define TS_MAXY 940
+#define TS_MAXY 850
 
-#define MINPRESSURE 10
+#define MINPRESSURE 100
 #define MAXPRESSURE 1000
 
 // Assign human-readable names to some common 16-bit color values:
@@ -105,13 +106,8 @@ void loop() {
   {
     //Serial.println("Z: " + String(p.z) + " X: " + String(p.x) + " Y: " + String(p.y));
     // scale from 0->1023 to tft.width
-    p.x = map(p.x, TS_MINX, TS_MAXX, tft.height(), 0);
-    p.y = map(p.y, TS_MINY, TS_MAXY, 0, tft.width());
-
-    //Swapping for Set Rotation 3
-    p.x = p.x + p.y;
-    p.y = p.x - p.y;
-    p.x = p.x - p.y;
+    p.x = map(p.x, TS_MINX, TS_MAXX, 0, tft.width());
+    p.y = map(p.y, TS_MINY, TS_MAXY, 0, tft.height());
 
     delay(10);
     Serial.println("(" +  String(p.x) + " , " + String(p.y) + " , " + String(p.z) + ")");

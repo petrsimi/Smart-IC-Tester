@@ -56,14 +56,8 @@ String getIC()
 
     if (p.z > MINPRESSURE && p.z < MAXPRESSURE)
     {
-      // scale from 0->1023 to tft.width
-      p.x = map(p.x, TS_MINX, TS_MAXX, tft.height(), 0);
-      p.y = map(p.y, TS_MINY, TS_MAXY, 0, tft.width());
-
-      //Swapping for Set Rotation 3
-      p.x = p.x + p.y;
-      p.y = p.x - p.y;
-      p.x = p.x - p.y;
+      p.x = map(p.x, TS_MINX, TS_MAXX, 0, tft.width());
+      p.y = map(p.y, TS_MINY, TS_MAXY, 0, tft.height());
 
       pressed = true;
     }
